@@ -1,5 +1,6 @@
-const mongoose = require('mongoose');
-const { Thought, Reaction } = require('./');
+/* const mongoose = require('mongoose');
+const Thought = require('./Thought');
+const Reaction = require('./Reaction');
 
 // User schema
 const userSchema = new mongoose.Schema({
@@ -14,4 +15,4 @@ const userSchema = new mongoose.Schema({
 // User model
 const User = mongoose.model('User', userSchema);
 
-module.exports = User;
+module.exports = User; */
