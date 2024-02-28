@@ -54,4 +54,34 @@ module.exports = {
             res.status(500).json(`Internal server error: ${err}`);
         }
     },
+    async addFriend(req, res) {
+        try {
+            const result = await User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $addToSet: { friends: { _id: req.params.friendId } } },
+                { new: true }
+            );
+            if(!result) {
+                res.status(404).json('No user with that ID found');
+            }
+            res.status(200).json(result);
+        } catch (err) {
+            res.status(500).json(`Internal server error: ${err}`);
+        }
+    },
+    async deleteFriend(req, res) {
+        try {
+            const result = await User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $pull: { friends: { _id: req.params.friendId } } },
+                { new: true }
+            );
+            if(!result) {
+                res.status(404).json('No user with that ID found');
+            }
+            res.status(200).json(result);
+        } catch (err) {
+            res.status(500).json(`Internal server error: ${err}`);
+        }
+    },
 };
