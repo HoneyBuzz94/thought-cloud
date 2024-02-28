@@ -1,36 +1,13 @@
 const mongoose = require('mongoose');
+const Reaction = require('./Reaction');
 
-// User schema
-const userSchema = new mongoose.Schema({
-    username: { type: String, required: true },
-    email: { type: String, required: true },
-    password: { type: String, required: true },
-    friends: [],
-    thoughts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Thought' }],
-});
-
-// User model
-const User = mongoose.model('User', userSchema);
-
-// Reaction schema
-const reactionSchema = mongoose.Schema({
-    text: { type: String, required: true },
-    username: userSchema,
-    dateCreated: String,
-});
-
-// Reaction model
-const Reaction = mongoose.model('Reaction', reactionSchema);
-
-// Thought schema
 const thoughtSchema = new mongoose.Schema({
     text: { type: String, required: true },
     username: { type: String, required: true },
-    reactions: [reactionSchema],
-    dateCreated: String,
+    createdAt: { type: Date, default: Date.now },
+    reactions: [Reaction],
 });
 
-// Thought model
-const Thought = mongoose.model('Thought', thoughtSchema);
+const Thought = mongoose.model('thought', thoughtSchema);
 
-module.exports = { User, Reaction, Thought };
+module.exports = Thought;
