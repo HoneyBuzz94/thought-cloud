@@ -3,7 +3,6 @@ const Reaction = require('./Reaction');
 
 const thoughtSchema = new mongoose.Schema({
     text: { type: String, required: true },
-    username: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
     reactions: [Reaction],
 });

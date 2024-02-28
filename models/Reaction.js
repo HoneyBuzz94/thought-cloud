@@ -8,4 +8,4 @@ const reactionSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now }
 });
 
-module.exports = responseSchema;
+module.exports = reactionSchema;
