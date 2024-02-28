@@ -1,14 +1,13 @@
 const router = require('express').Router();
-const { User } = require('../models/Thought');
+const { Thought } = require('../models/Thought');
 
-// Post route for creating a new user
+// Post route for creating a new thought
 router.post('/', async (req, res) => {
     try {
-        const newUser = new User(req.body);
-        newUser.save();
+        const newThought = await Thought.create(req.body);
 
-        if(newUser) {
-            res.status(201).json(newUser);
+        if(newThought) {
+            res.status(201).json(newThought);
         } else {
             res.status(400).json('Bad request');
         }
@@ -17,10 +16,10 @@ router.post('/', async (req, res) => {
     }
 });
 
-// Get route for all users
+// Get route for all thoughts
 router.get('/', async (req, res) => {
     try {
-        const result = await User.find({});
+        const result = await Thought.find({});
 
         if(result) {
             res.status(200).json(result);
@@ -32,10 +31,10 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Get route for a single user
-router.get('/:userId', async (req, res) => {
+// Get route for a single thought
+router.get('/:thoughtId', async (req, res) => {
     try {
-        const result = await User.findOne({ _id: req.params.userId });
+        const result = await Thought.findOne({ _id: req.params.thoughtId });
 
         if(result) {
             res.status(200).json(result);
@@ -48,9 +47,9 @@ router.get('/:userId', async (req, res) => {
 });
 
 // Put route to update a single user
-router.put('/:userId', async (req, res) => {
+router.put('/:thoughtId', async (req, res) => {
     try {
-        const result = await User.findOneAndUpdate({ _id: req.params.userId }, req.body, { new: true });
+        const result = await Thought.findOneAndUpdate({ _id: req.params.thoughtId }, req.body, { new: true });
 
         if(result) {
             res.status(200).json(result);
@@ -63,9 +62,9 @@ router.put('/:userId', async (req, res) => {
 });
 
 // Delete route for a single user
-router.delete('/:userId', async (req, res) => {
+router.delete('/:thoughtId', async (req, res) => {
     try {
-        const result = await User.findOneAndDelete({ _id: req.params.userId });
+        const result = await Thought.findOneAndDelete({ _id: req.params.thoughtId });
         res.status(204).json(result);
     } catch (err) {
         res.status(500).json(err);

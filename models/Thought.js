@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
     friends: [],
+    thoughts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Thought' }],
 });
 
 // User model
@@ -24,7 +25,7 @@ const Reaction = mongoose.model('Reaction', reactionSchema);
 // Thought schema
 const thoughtSchema = new mongoose.Schema({
     text: { type: String, required: true },
-    username: userSchema,
+    username: { type: String, required: true },
     reactions: [reactionSchema],
     dateCreated: String,
 });
