@@ -11,7 +11,7 @@ module.exports = {
     },
     async getSingleUser(req, res) {
         try {
-            const result = await User.findOne({ _id: req.params.userId });
+            const result = await User.findOne({ _id: req.params.userId }).populate('friends').populate('thoughts');
             if (!result) {
                 return res.status(404).json("No user with that ID found");
             }
@@ -56,9 +56,10 @@ module.exports = {
     },
     async addFriend(req, res) {
         try {
+            const newFriend = await User.findOne({ _id: req.params.friendId });
             const result = await User.findOneAndUpdate(
                 { _id: req.params.userId },
-                { $addToSet: { friends: { _id: req.params.friendId } } },
+                { $addToSet: { friends: newFriend } },
                 { new: true }
             );
             if(!result) {
@@ -73,7 +74,7 @@ module.exports = {
         try {
             const result = await User.findOneAndUpdate(
                 { _id: req.params.userId },
-                { $pull: { friends: { _id: req.params.friendId } } },
+                { $pull: { friends: req.params.friendId } },
                 { new: true }
             );
             if(!result) {

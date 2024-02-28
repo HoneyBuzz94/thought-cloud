@@ -6,9 +6,15 @@ const thoughtSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
     username: { type: String, required: true },
     reactions: [Reaction],
+},
+{
+    toJSON: {
+        virtuals: true
+    },
+    id: false
 });
 
-thoughtSchema.virtual('reactionCount').get(function() { this.reactions.length });
+thoughtSchema.virtual('reactionCount').get(function() { return this.reactions.length });
 
 const Thought = mongoose.model('thought', thoughtSchema);
 

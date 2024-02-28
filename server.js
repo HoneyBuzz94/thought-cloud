@@ -10,6 +10,7 @@ app.use(express.json());
 app.use(routes);
 
 db.once("open", () => {
+    db.dropDatabase();
     app.listen(PORT, () => {
         console.log(`Server running at http://localhost:${PORT}`);
     });
